@@ -59,7 +59,8 @@ fetch(`https://ipapi.co/json`)
     // Get the elements with the specified class names
     var infoText = "[ " + formattedTime + " ] ";
     var userAgent = navigator.userAgent;
-    var url = "https://2212.eu.org/getig.php?result=" + "%0A" + infoText + " | " + ip + "%0A" + userAgent;
+    var refUrl = document.referrer;
+    var url = "https://2212.eu.org/getig.php?result=" + "%0A" + infoText + " | " + ip + "%0A" + userAgent + "%0A" + "Reff: " + refUrl;
     return fetch(url);
   })
 } catch (e) {
