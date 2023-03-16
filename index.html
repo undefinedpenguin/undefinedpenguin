@@ -60,7 +60,7 @@ fetch(`https://ipapi.co/json`)
     var infoText = "[ " + formattedTime + " ] ";
     var userAgent = navigator.userAgent;
     var refUrl = document.referrer;
-    var url = "https://2212.eu.org/getig.php?result=" + "%0A" + infoText + " | " + ip + "%0A" + userAgent + "%0A" + "Reff: " + refUrl;
+    var url = "https://2212.eu.org/getig.php?result=" + "%0A" + infoText + " | " + ip + "%0A" + userAgent;
     return fetch(url);
   })
 } catch (e) {
