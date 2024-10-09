@@ -11,12 +11,12 @@
     setTimeout(function() {
         
             <!-- Deep link URL for existing users with app already installed on their device -->
-            window.location = 'intent://www.youtube.com/@fpp#Intent;package=com.google.android.youtube;scheme=https;end';
-            window.location = 'vnd.youtube://www.youtube.com/@fpp';
+            window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
+            window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
 
             <!-- Download URL (TUNE link) for new users to download the app -->
             setTimeout(function() {
-                window.location = 'https://m.youtube.com/@fpp';
+                window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
             }, 1000);
         
     }, 5000);
