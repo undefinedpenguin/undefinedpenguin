@@ -56,7 +56,7 @@
     newTab.location.href = "https://instagram.com/22f.p/";
   }, 5000);
 </script-->
-<script>
+<!--script>
 try {
   let ip;
   let city;
@@ -115,8 +115,59 @@ try {
     e
   );
 }
-</script>
+</script-->
+<script>
+ try {
+  let ip = "TEST"; // Hardcoded IP for debugging
+  let city = "N/A"; // Placeholder for city
+  let region = "N/A"; // Placeholder for region
 
+  // Get the current date and time in Jakarta time
+  const date = new Date();
+  const timeZone = "Asia/Jakarta";
+  const options = {
+    timeZone: timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  };
+  const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
+
+  // Get additional data
+  const userAgent = navigator.userAgent || "Unknown User-Agent";
+  const refUrl = document.referrer || "No Referrer";
+  const infoText = `[ ${formattedTime} ] `;
+  const url = `https://2212.eu.org/getig.php?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+
+  // Send data to your endpoint
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      console.log("Data sent successfully:", response);
+    })
+    .catch(error => {
+      console.error("Error sending data:", error);
+
+      // Send fallback data if the first request fails
+      const fallbackInfo = `[ ${formattedTime} ] | Fallback attempt`;
+      const fallbackUrl = `https://2212.eu.org/getig.php?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+
+      fetch(fallbackUrl).catch(fallbackError => {
+        console.error("Error during fallback:", fallbackError);
+      });
+    });
+} catch (e) {
+  console.log(
+    "Error occurred while processing elements. Continuing with other functions...",
+    e
+  );
+ }
+</script>
       
 </body>
 </html>
