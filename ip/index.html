@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="ip"></div>
+    <script>
+      fetch('https://api.ipify.org?format=text')
+        .then(response => response.text())
+        .then(ip => {
+          document.getElementById('ip').textContent = ip;
+        });
+    </script>
+  </body>
+</html>
