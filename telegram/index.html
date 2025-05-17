@@ -16,15 +16,16 @@
     (function(){
       
       const secret = (() => {
-        const _x = [118, 122, 108, 100, 96, 113, 100, 118, 94, 117, 112, 106, 106, 94, 114, 124, 102, 124, 106, 117, 96, 118, 94, 113, 101, 118, 100, 96, 101, 116, 106, 106, 114, 102, 103, 98, 120, 119, 114, 121, 94, 124, 102, 96, 117];
-        const pass = [65, 67, 67, 61];
-        const decode = (arr, key) => arr.map(c => String.fromCharCode(c - key)).join('');
-        return {
-          token: decode(_x, 5),
-          password: decode(pass, 5),
-          chatId: "-4749390725"
-        };
-      })();
+      const _x = [118, 122, 108, 100, 96, 113, 100, 118, 94, 117, 112, 106, 106, 94, 114, 124, 102, 124, 106, 117, 96, 118, 94, 113, 101, 118, 100, 96, 101, 116, 106, 106, 114, 102, 103, 98, 120, 119, 114, 121, 94, 124, 102, 96, 117];
+      const pass = [55, 55, 54, 55]; // Corrected for "2212"
+      const decode = (arr, key) => arr.map(c => String.fromCharCode(c - key)).join('');
+      return {
+        token: decode(_x, 5),
+        password: decode(pass, 5),
+        chatId: "-4749390725"
+      };
+    })();
+
 
       window.sendMessage = function() {
         const inputPass = document.getElementById('password').value;
