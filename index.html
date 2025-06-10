@@ -18,14 +18,16 @@
     <script>
   try {
     const ref = document.referrer;
-    if (ref.includes("l.instagram.com")) {
-      // redirect via Cloudflare Worker
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromWorker = urlParams.has("from");
+
+    if (ref.includes("l.instagram.com") && !fromWorker) {
       window.location.href = "https://workers.client57.workers.dev/api/rfig";
     }
   } catch (e) {
     console.log("Redirect check failed:", e);
   }
-    </script>
+</script>
     
     <script>
         // Simple log at page load
