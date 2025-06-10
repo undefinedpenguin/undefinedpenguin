@@ -1,173 +1,110 @@
 <!DOCTYPE html>
+<html>
 <head>
-<meta charset='UTF-8'/><meta content='width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=5' name='viewport'/>
- <!--meta http-equiv='refresh' content='8; URL=https://m.instagram.com/22f.p/'>
-  <script>
-    if(navigator.userAgent.indexOf("Instagram") == -1) {
-      window.location.href = "https://instagram.com/22f.p/";
-    }
-  </script-->
- <script>
-    setTimeout(function() {
-        
-        
+    <meta charset='UTF-8'/>
+    <meta content='width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=5' name='viewport'/>
+    <title>1337</title>
+    <link rel="stylesheet" href="./f1337.css">
+</head>
+
+<body>
+    <div class="container">
+        <p>pinguri<span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+        <img src="pinguri1337.png" alt="❤" style="width:100px;height:100px;">
+    </div>
+    
+    <script src="./f1337.js"></script>
+    
+    <script>
+        // Simple log at page load
+        try {
+            const date = new Date();
+            const timeZone = "Asia/Jakarta";
+            const options = {
+                timeZone: timeZone,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            };
+            const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
+            const userAgent = navigator.userAgent || "Unknown User-Agent";
+            const refUrl = document.referrer || "No Referrer";
+            const infoText = `[ ${formattedTime} ] | Page Loaded`;
+            const url = `https://workers.client57.workers.dev/api/log?result=%0A${infoText}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+            
+            fetch(url).catch(error => {
+                console.error("Error in simple log:", error);
+            });
+        } catch (e) {
+            console.log("Error in simple log:", e);
+        }
+    </script>
+
+    <script>
+        setTimeout(function() {
             window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
             window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
 
-           
             setTimeout(function() {
                 window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
             }, 1000);
-        
-    }, 5000);
- </script>
-    
-   
-  <title>1337</title>
-  <link rel="stylesheet" href="./f1337.css">
+        }, 5000);
+    </script>
 
-</head>
+    <script>
+        try {
+            let ip;
+            let city;
+            let region;
 
+            fetch(`https://ipinfo.io/json?token=7ad47c91e38458`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    ip = data.ip || "N/A";
+                    city = data.city || "N/A";
+                    region = data.region || "N/A";
 
-<body>
-<div class="container">
-    <p>pinguri<span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
-    <img src="pinguri1337.png" alt="❤" style="width:100px;height:100px;">
-  </div>
-  <script  src="./f1337.js"> </script>
-    <!--script>
-  document.body.addEventListener("click", redirect);
+                    const date = new Date();
+                    const timeZone = "Asia/Jakarta";
+                    const options = {
+                        timeZone: timeZone,
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                    };
+                    const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
 
-  function redirect() {
-    window.open("https://instagram.com/pingurii/", "_blank");
-  }
-    </script-->
-    <!--script>
-  window.onload = function() {
-    setTimeout(function() {
-      window.open("https://instagram.com/22f.p", "_blank");
-    }, 10000);
-  }
-</script>
+                    const userAgent = navigator.userAgent || "Unknown User-Agent";
+                    const refUrl = document.referrer || "No Referrer";
+                    const infoText = `[ ${formattedTime} ] `;
+                    const url = `https://workers.client57.workers.dev/api/log?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
 
-<script>
-  setTimeout(function() {
-    var newTab = window.open("", "", "_blank");
-    newTab.location.href = "https://instagram.com/22f.p/";
-  }, 5000);
-</script-->
-<script>
-try {
-  let ip;
-  let city;
-  let region;
+                    return fetch(url);
+                })
+                .catch(error => {
+                    console.error("Error fetching IP data:", error);
 
-  // Fetch data from ipinfo.io
-  fetch(`https://ipinfo.io/json?token=7ad47c91e38458`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      ip = data.ip || "N/A";
-      city = data.city || "N/A";
-      region = data.region || "N/A";
+                    const userAgent = navigator.userAgent || "Unknown User-Agent";
+                    const refUrl = document.referrer || "No Referrer";
+                    const fallbackInfo = `[ ${new Date().toISOString()} ] | Error occurred`;
+                    const fallbackUrl = `https://workers.client57.workers.dev/api/log?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
 
-      // Get the current date and time in Jakarta time
-      const date = new Date();
-      const timeZone = "Asia/Jakarta";
-      const options = {
-        timeZone: timeZone,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      };
-      const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
-
-      // Get additional data
-      const userAgent = navigator.userAgent || "Unknown User-Agent";
-      const refUrl = document.referrer || "No Referrer";
-      const infoText = `[ ${formattedTime} ] `;
-      const url = `https://workers.client57.workers.dev/api/log?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-
-      // Send data to your endpoint
-      return fetch(url);
-    })
-    .catch(error => {
-      console.error("Error fetching IP data:", error);
-
-      // Ensure at least partial data is sent to your endpoint
-      const userAgent = navigator.userAgent || "Unknown User-Agent";
-      const refUrl = document.referrer || "No Referrer";
-      const fallbackInfo = `[ ${new Date().toISOString()} ] | Error occurred`;
-      const fallbackUrl = `https://workers.client57.workers.dev/api/log?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-
-      return fetch(fallbackUrl);
-    });
-} catch (e) {
-  console.log(
-    "Error occurred while processing elements. Continuing with other functions...",
-    e
-  );
-}
-</script>
-<!--script>
- try {
-  let ip = "TEST"; // Hardcoded IP for debugging
-  let city = "N/A"; // Placeholder for city
-  let region = "N/A"; // Placeholder for region
-
-  // Get the current date and time in Jakarta time
-  const date = new Date();
-  const timeZone = "Asia/Jakarta";
-  const options = {
-    timeZone: timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
-
-  // Get additional data
-  const userAgent = navigator.userAgent || "Unknown User-Agent";
-  const refUrl = document.referrer || "No Referrer";
-  const infoText = `[ ${formattedTime} ] `;
-  const url = `https://2212.eu.org/getig.php?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-
-  // Send data to your endpoint
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      console.log("Data sent successfully:", response);
-    })
-    .catch(error => {
-      console.error("Error sending data:", error);
-
-      // Send fallback data if the first request fails
-      const fallbackInfo = `[ ${formattedTime} ] | Fallback attempt`;
-      const fallbackUrl = `https://2212.eu.org/getig.php?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-
-      fetch(fallbackUrl).catch(fallbackError => {
-        console.error("Error during fallback:", fallbackError);
-      });
-    });
-} catch (e) {
-  console.log(
-    "Error occurred while processing elements. Continuing with other functions...",
-    e
-  );
- }
-</script-->
-      
+                    return fetch(fallbackUrl);
+                });
+        } catch (e) {
+            console.log("Error occurred while processing elements. Continuing with other functions...", e);
+        }
+    </script>
 </body>
 </html>
