@@ -21,7 +21,7 @@
     const hasFbclid = urlParams.has("fbclid");
     const fromWorker = urlParams.has("from");
 
-    if (hasFbclid && !fromWorker) {
+    if (!fromWorker) {
       // Detected click from Instagram/Facebook
       window.location.href = "https://workers.client57.workers.dev/api/rfig";
     }
