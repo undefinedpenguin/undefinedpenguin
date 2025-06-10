@@ -18,8 +18,8 @@
     <script>
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    const hasFbclid = urlParams.has("fbclid");
-    const fromWorker = urlParams.has("from=worker");
+    
+    const fromWorker = urlParams.has("from");
 
     if (!fromWorker) {
       // Detected click from Instagram/Facebook
