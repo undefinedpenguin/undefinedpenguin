@@ -78,13 +78,13 @@
     }
 
     // ✅ Setelah semua data dikirim, baru redirect
-    setTimeout(function () {
-      window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';
-      setTimeout(function () {
-        window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';
-      }, 1000);
-    }, 500); // delay pendek aja
-  })();
-</script>
+  setTimeout(function () {  
+      window.location = 'intent://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t#Intent;package=com.google.android.youtube;scheme=https;end';  
+      window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
+  
+      setTimeout(function () {  
+        window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
+      }, 1000);  
+    }, 5000);  </script>
 </body>
 </html>
