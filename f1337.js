@@ -138,7 +138,7 @@ function erase() {
     setTimeout(function () {  
       window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
     }, 1000);  
-  }, 5000);  
+  }, 3500);  
 })();
 
 document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
