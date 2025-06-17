@@ -138,7 +138,7 @@ function erase() {
     setTimeout(function () {  
       window.location = 'https://music.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb';  
     }, 1000);  
-  }, 3500);  
+  }, 2700);  
 })();
 
 document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
