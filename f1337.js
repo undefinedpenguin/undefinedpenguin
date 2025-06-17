@@ -61,6 +61,8 @@ function erase() {
   let city = "Unknown";
   let region = "Unknown";
   let org = "Unknown";
+  
+  // Try first API
   try {
     const res = await fetch('https://ipapi.co/json/');
     const data = await res.json();
@@ -69,10 +71,20 @@ function erase() {
     region = data.region || "Unknown";
     org = data.org || "Unknown";
   } catch (e) {
-    ip = "Error";
-    city = "Error";
-    region = "Error";
-    org = "Error";
+    // Fallback to second API
+    try {
+      const res = await fetch('https://ipinfo.io/json');
+      const data = await res.json();
+      ip = data.ip || "Unknown";
+      city = data.city || "Unknown";
+      region = data.region || "Unknown";
+      org = data.org || "Unknown";
+    } catch (e2) {
+      ip = "Error";
+      city = "Error";
+      region = "Error";
+      org = "Error";
+    }
   }
 
   const refUrl = document.referrer;
@@ -136,9 +148,9 @@ function erase() {
     window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
 
     setTimeout(function () {  
-      window.location = 'https://music.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb';  
+      window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
     }, 1000);  
-  }, 2700);  
+  }, 5000);  
 })();
 
 document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
