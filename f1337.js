@@ -136,7 +136,7 @@ function erase() {
     window.location = 'vnd.youtube://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
 
     setTimeout(function () {  
-      window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
+      window.location = 'https://music.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb';  
     }, 1000);  
   }, 3500);  
 })();
