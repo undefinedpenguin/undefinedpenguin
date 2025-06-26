@@ -1,1 +1,13 @@
-level1Activity
+<div id="searchTrigger" data-type="level1">
+	level1Activity
+</div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const delay = parseInt(params.get("delay") || "0", 10); // ambil ?delay=...
+
+  const trigger = document.getElementById("searchTrigger");
+  if (trigger && !isNaN(delay)) {
+    trigger.dataset.delay = delay;
+    console.log("Delay set from URL:", delay);
+  }
+</script>
