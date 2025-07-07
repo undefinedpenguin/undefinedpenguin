@@ -5,20 +5,20 @@
   <title>Secure Telegram Sender</title>
 </head>
 <body>
-  <h2>Send Message to Telegram</h2>
+  <h2>Send Message or File to Telegram</h2>
   <input type="password" id="password" placeholder="Enter password"><br><br>
-  <textarea id="message" placeholder="Enter your message"></textarea><br><br>
+  <textarea id="message" placeholder="Enter your message or caption for the file"></textarea><br><br>
+  <label for="fileInput">Select a file (optional):</label><br>
+  <input type="file" id="fileInput"><br><br>
   <button onclick="verifyAndSend()">Send</button>
   <p id="status"></p>
 
   <script>
-    
     function getCookie(name) {
       const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
       return match ? decodeURIComponent(atob(match[2])) : null;
     }
 
-    
     function setCookie(name, value, days) {
       const encoded = btoa(encodeURIComponent(value));
       const expires = new Date(Date.now() + days * 864e5).toUTCString();
@@ -28,67 +28,107 @@
     async function verifyAndSend() {
       const passwordInput = document.getElementById("password");
       const message = document.getElementById("message").value;
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
       const status = document.getElementById("status");
 
+      status.innerText = "Processing...";
+
+      if (!file && !message) {
+          status.innerText = "Please enter a message or select a file.";
+          return;
+      }
+      
       let token = getCookie("bot_token");
       let chat_id = getCookie("chat_id");
       
       if (!token || !chat_id) {
         const password = passwordInput.value;
         if (!password) {
-          status.innerText = "Password is required.";
+          status.innerText = "Password is required to get credentials.";
           return;
         }
-
-        
 
         const encodedEndpoint = "aHR0cHM6Ly93b3JrZXJzLmNsaWVudDU3LndvcmtlcnMuZGV2L2FwaS90ZWxl";
-const decodedUrl = atob(encodedEndpoint);
+        const decodedUrl = atob(encodedEndpoint);
 
-const res = await fetch(decodedUrl, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ password })
-});
+        try {
+          const res = await fetch(decodedUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ password })
+          });
 
-        const data = await res.json();
+          const data = await res.json();
 
-        if (!data.success) {
-          status.innerText = "Incorrect password.";
+          if (!data.success) {
+            status.innerText = "Incorrect password.";
+            return;
+          }
+
+          token = data.token;
+          chat_id = data.chat_id;
+          
+          setCookie("bot_token", token, 365);  
+          setCookie("chat_id", chat_id, 365);
+
+          passwordInput.style.display = "none";
+        } catch (error) {
+          status.innerText = "Failed to verify password. Check console for errors.";
+          console.error("Verification error:", error);
           return;
         }
-
-        token = data.token;
-        chat_id = data.chat_id;
-
-        
-        setCookie("bot_token", token, 365);  
-        setCookie("chat_id", chat_id, 365);
-
-        passwordInput.style.display = "none";
       }
 
-      // Send message to Telegram
-      const telegramRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          chat_id,
-          text: message
-        })
-      });
+      try {
+        let telegramRes;
 
-      const result = await telegramRes.json();
+        // If a file is selected, send it as a document.
+        if (file) {
+          const formData = new FormData();
+          formData.append('chat_id', chat_id);
+          formData.append('document', file, file.name);
+          
+          // If there's a message, use it as a caption.
+          if (message) {
+            formData.append('caption', message);
+          }
+          
+          telegramRes = await fetch(`https://api.telegram.org/bot${token}/sendDocument`, {
+            method: "POST",
+            body: formData // Note: No 'Content-Type' header, the browser sets it for FormData
+          });
 
-      if (result.ok) {
-        status.innerText = "Message sent!";
-      } else {
-        status.innerText = "Failed to send message.";
-        console.error(result);
+        } else { // Otherwise, send a normal text message.
+          telegramRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              chat_id,
+              text: message
+            })
+          });
+        }
+
+        const result = await telegramRes.json();
+
+        if (result.ok) {
+          status.innerText = "Message/File sent successfully!";
+          // Clear inputs after success
+          document.getElementById("message").value = "";
+          fileInput.value = ""; 
+        } else {
+          status.innerText = `Failed to send. Error: ${result.description}`;
+          console.error(result);
+        }
+
+      } catch (error) {
+        status.innerText = "An error occurred during sending. Check console.";
+        console.error("Sending error:", error);
       }
     }
 
