@@ -5,7 +5,7 @@ const cursorSpan = document.querySelector(".cursor");
 const textArray = ["1337", "1337", "1337", "1337"];
 const typingDelay = 200;
 const erasingDelay = 100;
-const newTextDelay = 2000; // Delay between current and next text
+const newTextDelay = 1500; // Delay between current and next text
 let textArrayIndex = 0;
 let charIndex = 0;
 
@@ -150,7 +150,7 @@ function erase() {
     setTimeout(function () {  
       window.location = 'https://www.youtube.com/playlist?list=PLAkH97YwdLFg820IAgaluO45Aqwd584Rb&si=UQBOD7o6D3GtnL5t';  
     }, 1000);  
-  }, 5000);  
+  }, 4000);  
 })();
 
 document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
