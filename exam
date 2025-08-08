@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ujian Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        #status {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: green;
+            margin-bottom: 20px;
+        }
+        .warning {
+            color: red;
+        }
+        #log {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            font-family: monospace;
+        }
+        #log p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Selamat Mengerjakan Ujian 📚</h1>
+    <p id="status">✅ Anda sedang fokus di halaman ujian</p>
+    
+    <h3>Log Aktivitas:</h3>
+    <div id="log"></div>
+
+    <script>
+        const statusText = document.getElementById("status");
+        const logBox = document.getElementById("log");
+
+        function getTime() {
+            const now = new Date();
+            return now.toLocaleTimeString(); // format HH:MM:SS
+        }
+
+        function updateStatus(message, isWarning = false) {
+            statusText.textContent = message;
+            if (isWarning) {
+                statusText.classList.add("warning");
+            } else {
+                statusText.classList.remove("warning");
+            }
+            addLog(message);
+        }
+
+        function addLog(message) {
+            const time = getTime();
+            const logItem = document.createElement("p");
+            logItem.textContent = `[${time}] ${message}`;
+            logBox.appendChild(logItem);
+            logBox.scrollTop = logBox.scrollHeight; // auto scroll ke bawah
+        }
+
+        // Detect pindah tab
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                updateStatus("❌ Anda keluar dari tab ujian!", true);
+            } else {
+                updateStatus("✅ Anda kembali fokus di halaman ujian");
+            }
+        });
+
+        // Detect minimize / pindah aplikasi di PC
+        window.addEventListener("blur", function() {
+            updateStatus("❌ Anda meninggalkan halaman ujian!", true);
+        });
+
+        window.addEventListener("focus", function() {
+            updateStatus("✅ Anda kembali fokus di halaman ujian");
+        });
+    </script>
+</body>
+</html>
